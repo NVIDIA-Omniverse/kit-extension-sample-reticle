@@ -1,0 +1,23 @@
+[package]
+version = "1.0.0"
+title = "Sample Viewport Reticle"
+description="A sample kit extension of a viewport reticle using omni.ui.scene."
+authors=["Matias Codesal <mcodesal@nvidia.com>"]
+readme  = "docs/README.md"
+changelog="docs/CHANGELOG.md"
+repository = ""
+category = "Rendering"
+keywords = ["camera", "reticle", "viewport"]
+preview_image = "data/preview.png"
+icon = "icons/icon.png"
+
+
+# Use omni.ui to build simple UI
+[dependencies]
+"omni.kit.viewport.utility" = {}
+"omni.ui.scene" = {}
+
+
+# Main python module this extension provides, it will be publicly available as "import omni.hello.world".
+[[python.module]]
+name = "omni.sample.reticle"
