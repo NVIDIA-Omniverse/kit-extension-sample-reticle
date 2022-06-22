@@ -1,10 +1,11 @@
 from functools import partial
 
-from omni.kit.viewport.utility import get_viewport_from_window_name
+import carb
 import omni.ui as ui
 from omni.ui import color as cl
 from omni.ui import scene
 
+from . import constants
 from .constants import CompositionGuidelines
 from .models import ReticleModel
 from . import styles
@@ -26,14 +27,21 @@ class ReticleOverlay:
         """
         self.model = model
         self.vp_win = vp_win
+        # Rebuild the overlay whenever the viewport window changes
         self.vp_win.set_height_changed_fn(self.on_window_changed)
         self.vp_win.set_width_changed_fn(self.on_window_changed)
-
-        self.vp = get_viewport_from_window_name(self.vp_win.title)
+        settings = carb.settings.get_settings()
+        self._viewport_subs = []
+        self._viewport_subs.append(settings.subscribe_to_node_change_events(constants.SETTING_RESOLUTION_WIDTH,
+                                                                            self.on_window_changed))
+        self._viewport_subs.append(settings.subscribe_to_node_change_events(constants.SETTING_RESOLUTION_HEIGHT,
+                                                                            self.on_window_changed))
+        self._viewport_subs.append(settings.subscribe_to_node_change_events(constants.SETTING_RESOLUTION_FILL,
+                                                                            self.on_window_changed))
         # Rebuild the overlay whenever the model changes
         self.model.add_reticle_changed_fn(self.build_viewport_overlay)
         ReticleOverlay._instances.append(self)
-        resolution = self.vp.get_texture_resolution()
+        resolution = self.vp_win.viewport_api.get_texture_resolution()
         self._aspect_ratio = resolution[0] / resolution[1]
 
     @classmethod
@@ -42,17 +50,29 @@ class ReticleOverlay:
         return cls._instances
 
     def destroy(self):
+        settings = carb.settings.get_settings()
+        for sub in self._viewport_subs:
+            settings.unsubscribe_to_change_events(sub)
+        self._viewport_subs = None
+        self.scene_view.scene.clear()
+        self.scene_view = None
+        self.reticle_menu.destroy()
+        self.reticle_menu = None
         self.vp_win.frame.clear()
         self.vp_win.destroy()
         self.vp_win = None
-        self.reticle_menu.destroy()
-        self.reticle_menu = None
-        ReticleOverlay._instances.remove(self)
 
     def on_window_changed(self, *args):
-        # TODO: Updating stored aspect ratio here, but should really do it on viewport texture resolution changes.
-        resolution = self.vp.get_texture_resolution()
-        self._aspect_ratio = resolution[0] / resolution[1]
+        """Update aspect ratio and rebuild overlay when viewport window changes."""
+        settings = carb.settings.get_settings()
+        fill = settings.get(constants.SETTING_RESOLUTION_FILL)
+        if fill:
+            width = self.vp_win.frame.computed_width + 8
+            height = self.vp_win.height
+        else:
+            width = settings.get(constants.SETTING_RESOLUTION_WIDTH)
+            height = settings.get(constants.SETTING_RESOLUTION_HEIGHT)
+        self._aspect_ratio = width / height
         self.build_viewport_overlay()
 
     def get_aspect_ratio_flip_threshold(self):
@@ -60,7 +80,6 @@ class ReticleOverlay:
 
         Aspect ratio policy doesn't seem to swap exactly when window_aspect_ratio == window_texture_aspect_ratio.
         This is a hack that approximates where the policy changes.
-
         """
         return self.get_aspect_ratio() - self.get_aspect_ratio() * 0.05
 
@@ -70,10 +89,13 @@ class ReticleOverlay:
             self.vp_win.frame.clear()
             with self.vp_win.frame:
                 with ui.ZStack():
+                    # Set the aspect ratio policy depending if the viewport is wider than it is taller or vice versa.
                     if self.vp_win.width / self.vp_win.height > self.get_aspect_ratio_flip_threshold():
                         self.scene_view = scene.SceneView(aspect_ratio_policy=scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL)
                     else:
                         self.scene_view = scene.SceneView(aspect_ratio_policy=scene.AspectRatioPolicy.PRESERVE_ASPECT_HORIZONTAL)
+
+                    # Build all the scene view guidelines
                     with self.scene_view.scene:
                         if self.model.composition_mode.as_int == CompositionGuidelines.THIRDS:
                             self._build_thirds()
@@ -84,19 +106,22 @@ class ReticleOverlay:
 
                         if self.model.action_safe_enabled.as_bool:
                             self._build_safe_rect(self.model.action_safe_percentage.as_float / 100.0,
-                                                color=cl.action_safe_default)
+                                                  color=cl.action_safe_default)
                         if self.model.title_safe_enabled.as_bool:
                             self._build_safe_rect(self.model.title_safe_percentage.as_float / 100.0,
-                                                color=cl.title_safe_default)
+                                                  color=cl.title_safe_default)
                         if self.model.custom_safe_enabled.as_bool:
                             self._build_safe_rect(self.model.custom_safe_percentage.as_float / 100.0,
-                                                color=cl.custom_safe_default)
+                                                  color=cl.custom_safe_default)
                         if self.model.letterbox_enabled.as_bool:
                             self._build_letterbox()
 
+                    # Build ReticleMenu button
                     with ui.VStack():
                         ui.Spacer()
-                        self.reticle_menu = ReticleMenu(self.model)
+                        with ui.HStack(height=0):
+                            ui.Spacer()
+                            self.reticle_menu = ReticleMenu(self.model)
 
     def _build_thirds(self):
         """Build the scene ui graphics for the Thirds composition mode."""
@@ -253,7 +278,7 @@ class ReticleMenu:
 
     def show_reticle_menu(self, x, y, button, modifier):
         """Build and show the reticle menu popup."""
-        self.reticle_menu = ui.Menu("Reticle")
+        self.reticle_menu = ui.Menu("Reticle", width=400, height=200)
         self.reticle_menu.clear()
 
         with self.reticle_menu:
@@ -346,4 +371,4 @@ class ReticleMenu:
                                 ui.Label("Letterbox Ratio", alignment=ui.Alignment.TOP)
                                 ui.Spacer(width=5)
                                 ui.FloatDrag(self.model.letterbox_ratio, width=35, min=0.001, step=0.01)
-        self.reticle_menu.show_at(x, y)
+        self.reticle_menu.show_at(x - self.reticle_menu.width, y - self.reticle_menu.height)

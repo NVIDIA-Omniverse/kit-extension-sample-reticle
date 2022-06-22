@@ -15,3 +15,7 @@ DEFAULT_TITLE_SAFE_PERCENTAGE = 90
 DEFAULT_CUSTOM_SAFE_PERCENTAGE = 85
 DEFAULT_LETTERBOX_RATIO = 2.35
 DEFAULT_COMPOSITION_MODE = CompositionGuidelines.OFF
+
+SETTING_RESOLUTION_WIDTH = "/app/renderer/resolution/width"
+SETTING_RESOLUTION_HEIGHT = "/app/renderer/resolution/height"
+SETTING_RESOLUTION_FILL = "/app/runLoops/rendering_0/fillResolution"
