@@ -97,24 +97,12 @@ class ReticleOverlay:
 
                     # Build all the scene view guidelines
                     with self.scene_view.scene:
-                        if self.model.composition_mode.as_int == CompositionGuidelines.THIRDS:
-                            self._build_thirds()
-                        elif self.model.composition_mode.as_int == CompositionGuidelines.QUAD:
-                            self._build_quad()
-                        elif self.model.composition_mode.as_int == CompositionGuidelines.CROSSHAIR:
-                            self._build_crosshair()
-
-                        if self.model.action_safe_enabled.as_bool:
-                            self._build_safe_rect(self.model.action_safe_percentage.as_float / 100.0,
-                                                  color=cl.action_safe_default)
-                        if self.model.title_safe_enabled.as_bool:
-                            self._build_safe_rect(self.model.title_safe_percentage.as_float / 100.0,
-                                                  color=cl.title_safe_default)
-                        if self.model.custom_safe_enabled.as_bool:
-                            self._build_safe_rect(self.model.custom_safe_percentage.as_float / 100.0,
-                                                  color=cl.custom_safe_default)
-                        if self.model.letterbox_enabled.as_bool:
-                            self._build_letterbox()
+                        ###################################
+                        # TUTORIAL START
+                        #
+                        # TODO: Build reticle guidelines
+                        ###################################
+                        pass
 
                     # Build ReticleMenu button
                     with ui.VStack():
@@ -125,48 +113,18 @@ class ReticleOverlay:
 
     def _build_thirds(self):
         """Build the scene ui graphics for the Thirds composition mode."""
-        aspect_ratio = self.get_aspect_ratio()
-        line_color = cl.comp_lines_default
-        inverse_ratio = 1 / aspect_ratio
-        if self.scene_view.aspect_ratio_policy == scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL:
-            scene.Line([-0.333 * aspect_ratio, -1, 0], [-0.333 * aspect_ratio, 1, 0], color=line_color)
-            scene.Line([0.333 * aspect_ratio, -1, 0], [0.333 * aspect_ratio, 1, 0], color=line_color)
-            scene.Line([-aspect_ratio, -0.333, 0], [aspect_ratio, -0.333, 0], color=line_color)
-            scene.Line([-aspect_ratio, 0.333, 0], [aspect_ratio, 0.333, 0], color=line_color)
-        else:
-            scene.Line([-1, -0.333 * inverse_ratio, 0], [1, -0.333 * inverse_ratio, 0], color=line_color)
-            scene.Line([-1, 0.333 * inverse_ratio, 0], [1, 0.333 * inverse_ratio, 0], color=line_color)
-            scene.Line([-0.333, -inverse_ratio, 0], [-0.333, inverse_ratio, 0], color=line_color)
-            scene.Line([0.333, -inverse_ratio, 0], [0.333, inverse_ratio, 0], color=line_color)
+        # TODO: Put thirds composition guidelines logic here
+        pass
 
     def _build_quad(self):
         """Build the scene ui graphics for the Quad composition mode."""
-        aspect_ratio = self.get_aspect_ratio()
-        line_color = cl.comp_lines_default
-        inverse_ratio = 1 / aspect_ratio
-        if self.scene_view.aspect_ratio_policy == scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL:
-            scene.Line([0, -1, 0], [0, 1, 0], color=line_color)
-            scene.Line([-aspect_ratio, 0, 0], [aspect_ratio, 0, 0], color=line_color)
-        else:
-            scene.Line([0, -inverse_ratio, 0], [0, inverse_ratio, 0], color=line_color)
-            scene.Line([-1, 0, 0], [1, 0, 0], color=line_color)
+        # TODO: Put quad composition guidelines logic here
+        pass
 
     def _build_crosshair(self):
         """Build the scene ui graphics for the Crosshair composition mode."""
-        aspect_ratio = self.get_aspect_ratio()
-        line_color = cl.comp_lines_default
-        if self.scene_view.aspect_ratio_policy == scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL:
-            scene.Line([0, 0.05 * aspect_ratio, 0], [0, 0.1 * aspect_ratio, 0], color=line_color)
-            scene.Line([0, -0.05 * aspect_ratio, 0], [0, -0.1 * aspect_ratio, 0], color=line_color)
-            scene.Line([0.05 * aspect_ratio, 0, 0], [0.1 * aspect_ratio, 0, 0], color=line_color)
-            scene.Line([-0.05 * aspect_ratio, 0, 0], [-0.1 * aspect_ratio, 0, 0], color=line_color)
-        else:
-            scene.Line([0, 0.05 * 1, 0], [0, 0.1 * 1, 0], color=line_color)
-            scene.Line([0, -0.05 * 1, 0], [0, -0.1 * 1, 0], color=line_color)
-            scene.Line([0.05 * 1, 0, 0], [0.1 * 1, 0, 0], color=line_color)
-            scene.Line([-0.05 * 1, 0, 0], [-0.1 * 1, 0, 0], color=line_color)
-
-        scene.Points([[0.00005, 0, 0]], sizes=[2], colors=[line_color])
+        # TODO: Put crosshair logic here
+        pass
 
     def _build_safe_rect(self, percentage, color):
         """Build the scene ui graphics for the safe area rectangle
@@ -175,50 +133,13 @@ class ReticleOverlay:
             percentage (float): The 0-1 percentage the render target that the rectangle should fill.
             color: The color to draw the rectangle wireframe with.
         """
-        aspect_ratio = self.get_aspect_ratio()
-        inverse_ratio = 1 / aspect_ratio
-        if self.scene_view.aspect_ratio_policy == scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL:
-            scene.Rectangle(aspect_ratio*2*percentage, 1*2*percentage, thickness=1, wireframe=True, color=color)
-        else:
-            scene.Rectangle(1*2*percentage, inverse_ratio*2*percentage, thickness=1, wireframe=True, color=color)
+        # TODO: Put safe area rectangle logic here
+        pass
 
     def _build_letterbox(self):
         """Build the scene ui graphics for the letterbox."""
-        aspect_ratio = self.get_aspect_ratio()
-        letterbox_color = cl.letterbox_default
-        letterbox_ratio = self.model.letterbox_ratio.as_float
-
-        def build_letterbox_helper(width, height, x_offset, y_offset):
-            move = scene.Matrix44.get_translation_matrix(x_offset, y_offset, 0)
-            with scene.Transform(transform=move):
-                scene.Rectangle(width * 2, height * 2, thickness=0, wireframe=False, color=letterbox_color)
-            move = scene.Matrix44.get_translation_matrix(-x_offset, -y_offset, 0)
-            with scene.Transform(transform=move):
-                scene.Rectangle(width * 2, height * 2, thickness=0, wireframe=False, color=letterbox_color)
-
-        if self.scene_view.aspect_ratio_policy == scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL:
-            if letterbox_ratio >= aspect_ratio:
-                height = 1 - aspect_ratio / letterbox_ratio
-                rect_height = height / 2
-                rect_offset = 1 - rect_height
-                build_letterbox_helper(aspect_ratio, rect_height, 0, rect_offset)
-            else:
-                width = aspect_ratio - letterbox_ratio
-                rect_width = width / 2
-                rect_offset = aspect_ratio - rect_width
-                build_letterbox_helper(rect_width, 1, rect_offset, 0)
-        else:
-            inverse_ratio = 1 / aspect_ratio
-            if letterbox_ratio >= aspect_ratio:
-                height = inverse_ratio - 1 / letterbox_ratio
-                rect_height = height / 2
-                rect_offset = inverse_ratio - rect_height
-                build_letterbox_helper(1, rect_height, 0, rect_offset)
-            else:
-                width = (aspect_ratio - letterbox_ratio) * inverse_ratio
-                rect_width = width / 2
-                rect_offset = 1 - rect_width
-                build_letterbox_helper(rect_width, inverse_ratio, rect_offset, 0)
+        # TODO: Put letterbox logic here
+        pass
 
     def get_aspect_ratio(self):
         """Get the aspect ratio of the viewport.
