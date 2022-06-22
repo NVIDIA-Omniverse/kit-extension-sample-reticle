@@ -1,5 +1,5 @@
 [package]
-version = "1.0.0"
+version = "1.1.0"
 title = "Sample Viewport Reticle"
 description="A sample kit extension of a viewport reticle using omni.ui.scene."
 authors=["Matias Codesal <mcodesal@nvidia.com>"]
