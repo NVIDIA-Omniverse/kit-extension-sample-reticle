@@ -6,7 +6,7 @@
 
     // Python modules search paths:
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/exts/omni.sample.reticle",
+        "${workspaceFolder}/exts/omni.example.reticle",
         "${workspaceFolder}/app/kit/extscore/omni.kit.pip_archive/pip_prebundle",
         "${workspaceFolder}/app/kit/plugins/bindings-python",
         "${workspaceFolder}/app/extscache/omni.anim.curve-103.7.10+103.1.wx64.r.cp37",

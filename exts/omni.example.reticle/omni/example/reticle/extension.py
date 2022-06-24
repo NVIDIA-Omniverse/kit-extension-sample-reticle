@@ -7,10 +7,10 @@ from .models import ReticleModel
 from .views import ReticleOverlay
 
 
-class SampleViewportReticleExtension(omni.ext.IExt):
+class ExampleViewportReticleExtension(omni.ext.IExt):
 
     def on_startup(self, ext_id):
-        print("[omni.sample.reticle] SampleViewportReticleExtension startup")
+        carb.log_info("[omni.example.reticle] ExampleViewportReticleExtension startup")
 
         # Reticle should ideally be used with "Fill Viewport" turned off.
         settings = carb.settings.get_settings()
@@ -24,5 +24,5 @@ class SampleViewportReticleExtension(omni.ext.IExt):
 
     def on_shutdown(self):
         """ Executed when the extension is disabled."""
-        print("[omni.sample.reticle] SampleViewportReticleExtension shutdown")
+        carb.log_info("[omni.example.reticle] ExampleViewportReticleExtension shutdown")
         self.reticle.destroy()
