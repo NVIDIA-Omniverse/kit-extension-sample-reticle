@@ -97,12 +97,24 @@ class ReticleOverlay:
 
                     # Build all the scene view guidelines
                     with self.scene_view.scene:
-                        ###################################
-                        # TUTORIAL START
-                        #
-                        # TODO: Build reticle guidelines
-                        ###################################
-                        pass
+                        if self.model.composition_mode.as_int == CompositionGuidelines.THIRDS:
+                            self._build_thirds()
+                        elif self.model.composition_mode.as_int == CompositionGuidelines.QUAD:
+                            self._build_quad()
+                        elif self.model.composition_mode.as_int == CompositionGuidelines.CROSSHAIR:
+                            self._build_crosshair()
+
+                        if self.model.action_safe_enabled.as_bool:
+                            self._build_safe_rect(self.model.action_safe_percentage.as_float / 100.0,
+                                                  color=cl.action_safe_default)
+                        if self.model.title_safe_enabled.as_bool:
+                            self._build_safe_rect(self.model.title_safe_percentage.as_float / 100.0,
+                                                  color=cl.title_safe_default)
+                        if self.model.custom_safe_enabled.as_bool:
+                            self._build_safe_rect(self.model.custom_safe_percentage.as_float / 100.0,
+                                                  color=cl.custom_safe_default)
+                        if self.model.letterbox_enabled.as_bool:
+                            self._build_letterbox()
 
                     # Build ReticleMenu button
                     with ui.VStack():
