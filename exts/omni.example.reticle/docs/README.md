@@ -1,5 +1,4 @@
-# Viewport Reticle Sample Kit Extension
-![Camera Reticle Preview](exts/omni.example.reticle/data/preview.png)
+# Viewport Reticle Sample
 
 The Viewport Reticle Sample extension adds a new menu button to all viewports. From this menu, users can enable and configure:
 1. Composition Guidelines
