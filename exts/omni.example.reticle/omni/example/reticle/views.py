@@ -150,6 +150,10 @@ class ReticleOverlay:
 
     def _build_letterbox(self):
         """Build the scene ui graphics for the letterbox."""
+        aspect_ratio = self.get_aspect_ratio()
+        letterbox_color = cl.letterbox_default
+        letterbox_ratio = self.model.letterbox_ratio.as_float
+        
         # TODO: Put letterbox logic here
         pass
 
