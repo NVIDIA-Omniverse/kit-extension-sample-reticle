@@ -1,4 +1,4 @@
-# Viewport Reticle Sample Kit Extension
+# Viewport Reticle Kit Extension Sample 
 ![Camera Reticle Preview](exts/omni.example.reticle/data/preview.png)
 
 The Viewport Reticle Sample extension adds a new menu button to all viewports. From this menu, users can enable and configure:
@@ -14,4 +14,4 @@ extension to help compose your shots too.
 
 To add a this extension to your Omniverse app:
 1. Go into: Extension Manager -> Gear Icon -> Extension Search Path
-2. Add this as a search path: `git://github.com/NVIDIA-Omniverse/sample-kit-extension-reticle?branch=main&dir=exts`
+2. Add this as a search path: `git://github.com/NVIDIA-Omniverse/kit-extension-sample-reticle?branch=main&dir=exts`
