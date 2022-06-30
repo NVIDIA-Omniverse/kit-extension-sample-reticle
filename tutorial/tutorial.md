@@ -12,18 +12,18 @@ In this guide, we will learn how to:
 * Create a crosshair and letterboxes
 
 ## Table of Content
-1. Download the Starter Project
-2. Drawing a Single Line
-3. Drawing a Quad
-4. Drawing Thirds
-5. Drawing a Crosshair
-6. Drawing Safe Area Rectangles
-7. Drawing Letterboxes
-8. Congratulations!
+1. [Download the Starter Project](#1-download-the-starter-project)
+2. [Drawing a Single Line](#2-drawing-a-single-line)
+3. [Drawing a Quad](#3-drawing-a-quad)
+4. [Drawing Thirds](#4-drawing-thirds)
+5. [Drawing a Crosshair](#5-drawing-a-crosshair)
+6. [Drawing Safe Area Rectangles](#6-drawing-safe-area-rectangles)
+7. [Drawing Letterboxes](#7-drawing-letterboxes)
+8. [Congratulations!](#8-congratulations)
 
 ## Prerequisites
-* #TODO add good prerequisite tutorials
-*
+It is recommended to understand th concepts in the following tutorials before proceeding:
+* How to make an extension by spawning primitives ([Link](https://github.com/NVIDIA-Omniverse/sample-kit-extension-spawnPrims/blob/main/exts/omni.example.spawnPrims/tutorial/Spawn_PrimsTutorial.md))
 
 
 ## 1. Download the Starter Project
@@ -115,7 +115,7 @@ scene.Line(start_point, end_point, color=line_color)
 ```
 ### 2.1 Practice
 
-**Challenge:** Try adding a line to the `build_viewport_overlay` function within the `with self.scene_view.scene` statement. Also try altering the starting_point and end_point values to see how it renders in the Omniverse app. Please remove the line after exploring how it works.
+**CHALLENGE (optional):** Try adding a line to the `build_viewport_overlay` function within the `with self.scene_view.scene` statement. Also try altering the starting_point and end_point values to see how it renders in the Omniverse app. Please remove the line after exploring how it works.
 
 ## 3. Drawing a Quad
 
@@ -199,6 +199,25 @@ def _build_thirds(self):
 
 Please replace it with the code in the `4.1 Theory`.
 
+**CHALLENGE (Optional)**: Currently, the code calls `scene.Line` 8 times to draw 4 lines based on 2 situations. Is there a way to collapse this logic so `scene.Line` only needs to be called 4 times to draw 4 lines regardless of the aspect ratio? Other variables may need to be defined.
+
+<details>
+    <summary>Solution</summary>
+    <code>
+    # There is more than one way to accomplish this
+
+    is_preserving_aspect_vertical = scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL
+
+    x, y = aspect_ratio, 1 if is_preserving_aspect_vertical else 1, inverse_ratio
+    x1, x2, y1, y2 = .333 * x, 1 * x, 1 * y, .333 * y
+
+    scene.Line([-x1, -y1, 0], [-x1, y1, 0], color=line_color)
+    scene.Line([x1, -y1, 0], [x1, y1, 0], color=line_color)
+    scene.Line([-x2, -y2, 0], [x2, -y2, 0], color=line_color)
+    scene.Line([-x2, y2, 0], [x2, y2, 0], color=line_color)
+    </code>
+</details>
+
 ## 5. Drawing a Crosshair
 
 ### 5.1 Theory
@@ -235,12 +254,21 @@ def _build_crosshair(self):
     pass
 ```
 
-Please replace it with the code in the `5.1 Theory`.
+Please replace it with the code in `5.1 Theory`.
 
 **Challenge:** What if you would like to express the crosshair length as a variable? Can you refactor the code to do this?
 
 ### 6. Drawing Safe Area Rectangles
-TODO: finish this section
+
+### 6.1 Theory
+Different televisions or monitors may display video in different ways, cutting off the edges of the video. To account for this, producers use [Safe Areas](https://en.wikipedia.org/wiki/Safe_area_(television)) to make sure text or graphics are rendered nicely regardless of the viewer's hardware.
+
+We will implement three rectangles:
+* `Title Safe` - helps align text so that it is not too close to the edge of the screen.
+* `Action Safe` - helps align graphics such as news tickers or logos
+* `Custom Safe ` helps the user define their own alignment rectangle
+
+If we look at the `build_viewport_overlay`, we will see that it calls the `_build_safe_rect` function three times. To implement this function, we'll need to draw a [rectangle](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Rectangle) like so:
 
 ```python
 def _build_safe_rect(self, percentage, color):
@@ -257,6 +285,12 @@ def _build_safe_rect(self, percentage, color):
         scene.Rectangle(1*2*percentage, inverse_ratio*2*percentage, thickness=1, wireframe=True, color=color)
 ```
 
+As before, we'll draw two different rectangles based on how the aspect is preserved. Rectangles are drawn from the center after defining the width and height. Since the center is at [0, 0, 0] and one of either the horizontal or vertical axis goes from -1 to 1 (as opposed to from 0 to 1), we will multiply our width and height by 2.
+
+### 6.2 Practice
+
+**TODO:** Currently, the `_build_crosshair` function in `views.py` has not been implemented:
+
 ```python
 def _build_safe_rect(self, percentage, color):
     """Build the scene ui graphics for the safe area rectangle
@@ -268,17 +302,17 @@ def _build_safe_rect(self, percentage, color):
     pass
 ```
 
+Please replace it with the code the `6.1 Theory`.
+
 ## 7. Drawing Letterboxes
 
 ### 7.1 Theory
 
 [Letterboxes](https://en.wikipedia.org/wiki/Letterboxing_(filming)) are large rectangles (typically black), on the edges of a screen typically to aid an image or a movie constructed with one aspect ratio to fit another. Other times, it can be used for dramatic effect to give something a more "theatrical" look.
 
-< image with a letterbox >
-
 #### 7.1.1 Build Letterbox Helper
 
-To create a letterbox, let's make a function to draw a [rectangle](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Rectangle). Let's take a look at the `build_letter_box_helper` function.
+To create a letterbox, let's make a function to draw and place a [rectangle](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Rectangle). Let's take a look at the `build_letter_box_helper` function.
 
 ```python
 def build_letterbox_helper(width, height, x_offset, y_offset):
@@ -300,7 +334,7 @@ So, `build_letterbox_helper` first defines the coordinates of where we expect th
 
 Now that we have our helper function, let's use it to construct our letterboxes. There are four situations to consider:
 
-< TODO: Draw a picture >
+![](images/letterbox_ratio.png)
 
 Let's break down the code for the first situation.
 
@@ -351,7 +385,7 @@ else:
         build_letterbox_helper(rect_width, inverse_ratio, rect_offset, 0)
 ```
 
-## 7. Congratulations!!
-Great job getting through this tutorial. Interested in improving your skills further? Please consider the following tutorials ... TODO: Add related tutorials.
+## 8. Congratulations!!
+Great job getting through this tutorial. Interested in improving your skills further? Please consider checking out the [Omni.ui.scene Example](https://github.com/NVIDIA-Omniverse/kit-extension-sample-ui-scene).
 
 ![](images/logo.png)
