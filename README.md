@@ -1,20 +1,47 @@
 # Viewport Reticle Kit Extension Sample 
+
+## [Viewport Reticle (omni.example.reticle)](tree/main/exts/omni.example.reticle)
 ![Camera Reticle Preview](exts/omni.example.reticle/data/preview.png)
 
-The Viewport Reticle Sample extension adds a new menu button to all viewports. From this menu, users can enable and configure:
-1. Composition Guidelines
-2. Safe Area Guidelines
-3. Letterbox
+### About
+This extension shows how to build a viewport reticle extension. The focus of this sample extension is to show how to use omni.ui.scene to draw additional graphical primitives on the viewport.
 
-To have a clear design target, we designed the UI as a look-alike of the similar Unreal Engine Cinematic Viewport control. 
-Even though this an example for learning how to create extensions using the omni.ui.scene API, feel free to use this 
-extension to help compose your shots too.
+### [README](tree/main/exts/omni.example.reticle)
+See the [README for this extension](tree/main/exts/omni.example.reticle) to learn more about it including how to use it.
+
+### [Tutorial](tutorial/tutorial.md)
+Follow a [step-by-step tutorial](tutorial/tutorial.md) that walks you through how to use omni.ui.scene to build this extension.
 
 ## Adding This Extension
 
-To add a this extension to your Omniverse app:
+To add this extension to your Omniverse app:
 1. Go into: Extension Manager -> Gear Icon -> Extension Search Path
 2. Add this as a search path: `git://github.com/NVIDIA-Omniverse/kit-extension-sample-reticle?branch=main&dir=exts`
+
+
+## Linking with an Omniverse app
+
+For a better developer experience, it is recommended to create a folder link named `app` to the *Omniverse Kit* app installed from *Omniverse Launcher*. A convenience script to use is included.
+
+Run:
+
+```bash
+> link_app.bat
+```
+
+There is also an analogous `link_app.sh` for Linux. If successful you should see `app` folder link in the root of this repo.
+
+If multiple Omniverse apps is installed script will select recommended one. Or you can explicitly pass an app:
+
+```bash
+> link_app.bat --app code
+```
+
+You can also just pass a path to create link to:
+
+```bash
+> link_app.bat --path "C:/Users/bob/AppData/Local/ov/pkg/create-2022.1.3"
+```
 
 ## Contributing
 The source code for this repository is provided as-is and we are not accepting outside contributions.
