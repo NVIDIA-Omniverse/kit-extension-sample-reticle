@@ -22,6 +22,6 @@ The Viewport Reticle Sample extension adds a new menu button at the bottom, righ
 * Check on **Letterbox Ratio** to enable the letterbox.
 * Enter a value or drag on the **Letterbox Ratio** field to adjust the letterbox ratio.
 
-## [Tutorial](../tutorial/tutorial.md)
+## [Tutorial](../../../tutorial/tutorial.md)
 This extension sample also includes a step-by-step tutorial to accelerate your growth as you learn to build your own
-Omniverse Kit extensions. [Get started with the tutorial.](tutorial/tutorial.md)
+Omniverse Kit extensions. [Get started with the tutorial.](../../../tutorial/tutorial.md)
