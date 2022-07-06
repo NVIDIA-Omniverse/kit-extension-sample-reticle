@@ -1,4 +1,4 @@
-# Viewport Reticle Kit Extension Sample 
+# Viewport Reticle (omni.example.reticle) 
 ![Camera Reticle Preview](../data/preview.png)
 
 ## Overview
