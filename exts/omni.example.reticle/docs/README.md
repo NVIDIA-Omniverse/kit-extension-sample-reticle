@@ -1,12 +1,16 @@
 # Viewport Reticle Kit Extension Sample 
 ![Camera Reticle Preview](../data/preview.png)
 
-## About
+## Overview
 
 The Viewport Reticle Sample extension adds a new menu button at the bottom, right of the viewport. From this menu, users can enable and configure:
 1. Composition Guidelines
 2. Safe Area Guidelines
 3. Letterbox
+
+## [Tutorial](../../../tutorial/tutorial.md)
+This extension sample also includes a step-by-step tutorial to accelerate your growth as you learn to build your own
+Omniverse Kit extensions. [Get started with the tutorial.](../../../tutorial/tutorial.md)
 
 ## Usage
 ### Composition Guidelines
@@ -21,7 +25,3 @@ The Viewport Reticle Sample extension adds a new menu button at the bottom, righ
 ### Letterbox
 * Check on **Letterbox Ratio** to enable the letterbox.
 * Enter a value or drag on the **Letterbox Ratio** field to adjust the letterbox ratio.
-
-## [Tutorial](../../../tutorial/tutorial.md)
-This extension sample also includes a step-by-step tutorial to accelerate your growth as you learn to build your own
-Omniverse Kit extensions. [Get started with the tutorial.](../../../tutorial/tutorial.md)

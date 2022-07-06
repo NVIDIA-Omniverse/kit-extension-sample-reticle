@@ -1,13 +1,13 @@
 # Viewport Reticle Kit Extension Sample 
 
-## [Viewport Reticle (omni.example.reticle)](exts/omni.example.reticle/docs/README.md)
+## [Viewport Reticle (omni.example.reticle)](exts/omni.example.reticle)
 ![Camera Reticle Preview](exts/omni.example.reticle/data/preview.png)
 
 ### About
 This extension shows how to build a viewport reticle extension. The focus of this sample extension is to show how to use omni.ui.scene to draw additional graphical primitives on the viewport.
 
 ### [README](exts/omni.example.reticle)
-See the [README for this extension](tree/main/exts/omni.example.reticle) to learn more about it including how to use it.
+See the [README for this extension](exts/omni.example.reticle) to learn more about it including how to use it.
 
 ### [Tutorial](tutorial/tutorial.md)
 Follow a [step-by-step tutorial](tutorial/tutorial.md) that walks you through how to use omni.ui.scene to build this extension.
