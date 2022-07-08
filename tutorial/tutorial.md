@@ -216,7 +216,7 @@ from omni.ui import scene
 ```
 
 - `omni.ui.scene` offers color functionality.
-[`omni.ui.scene`](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html) offers a number of useful classes including [Line](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Line).
+- [`omni.ui.scene`](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html) offers a number of useful classes including [Line](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Line).
 
 ### Step 3.2: Draw a Line in `build_viewport_overlay()`
 
