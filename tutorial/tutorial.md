@@ -9,7 +9,7 @@ Camera [reticles](https://en.wikipedia.org/wiki/Reticle) are patterns and lines 
 In this guide, you learn how to:
 
 * Create an Omniverse Extension
-* Include your extension in Omniverse Code
+* Include your Extension in Omniverse Code
 * Draw a line on top of the [viewport](https://docs.omniverse.nvidia.com/app_create/prod_extensions/ext_viewport.html)
 * Divide the viewport with multiple lines
 * Create a crosshair and letterboxes
@@ -34,7 +34,7 @@ Clone the `tutorial-start` branch of the `sample-kit-extension-reticle` [github 
 git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/sample-kit-extension-reticle.git
 ```
 
-This repository contains the assets you use in this tutorial.as
+This repository contains the assets you use in this tutorial
 
 ### Step 1.2: Navigate to `views.py`
 
@@ -155,9 +155,12 @@ with ui.VStack():
 
 These are the different modes and tools the user can select from the **ReticleMenu**. Throughout this tutorial, you write the logic for the following functions:
 
-- `self._build_thirds()`
 - `self._build_quad()`
+- `self._build_thirds()`
 - `self._build_crosshair()`
+- `self._build_crosshair()`
+- `_build_safe_rect()`
+- `_build_letterbox()`
 
 Before you do that, you need to import your custom Extension into Omniverse Code.
 
@@ -173,7 +176,7 @@ In Omniverse Code, navigate to the *Extensions* panel:
 
 ![Click the Extensions panel](images/extensions_panel.png)
 
-Here, you see a list of Omniverse Extensions, you can activate and use in Code.
+Here, you see a list of Omniverse Extensions that you can activate and use in Code.
 
 > **Note:** If you don't see the *Extensions* panel, enable **Window > Extensions**:
 >
@@ -189,9 +192,9 @@ In this panel, you can add your custom Extension to the Extensions list.
 
 ### Step 2.3: Create a New Search Path
 
-Create a new search path to the `exts` directory of your Extension by clicking the green **plus** icon and double clicking on the **path** field:
+Create a new search path to the `exts` directory of your Extension by clicking the green **plus** icon and double-clicking on the **path** field:
 
-![New search path](images/extension_search_paths.png)
+![New search path](images/new_search_path.png)
 
 When you submit your new search path, you should be able to find your extension in the *Extensions* list. Activate it:
 
@@ -370,7 +373,7 @@ In Omniverse Code, select **Crosshair** from the **Reticle** menu:
 
 With this option selected, the viewport shows a centered crosshair.
 
-### Step 7 Draw Safe Area Rectangles
+## Step 7: Draw Safe Area Rectangles
 
 Different televisions or monitors may display video in different ways, cutting off the edges. To account for this, producers use [Safe Areas](https://en.wikipedia.org/wiki/Safe_area_(television)) to make sure text and graphics are rendered nicely regardless of the viewer's hardware.
 
@@ -413,7 +416,7 @@ With these option selected, the viewport shows your safe areas.
 
 [Letterboxes](https://en.wikipedia.org/wiki/Letterboxing_(filming)) are large rectangles (typically black), on the edges of a screen used to help fit an image or a movie constructed with one aspect ratio into another. It can also be used for dramatic effect to give something a more theatrical look.
 
-#### Step 8.1 Draw Your Letterbox Helper
+### Step 8.1 Draw Your Letterbox Helper
 
 Write a function to draw and place a [rectangle](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.Rectangle):
 
@@ -436,7 +439,7 @@ The [scene.Matrix44.get_translation_matrix](https://docs.omniverse.nvidia.com/py
 
 Now that you have your helper function, you it to construct your letterboxes.
 
-#### Step 8.2: Review Your Potential Aspect Ratios
+### Step 8.2: Review Your Potential Aspect Ratios
 
 Consider the following situations:
 
@@ -446,7 +449,7 @@ In this case, the viewport height is static, but the horizontal width can change
 
 Next, write your logic to handle this case.
 
-#### Step 8.3: Build Your First Letterbox
+### Step 8.3: Build Your First Letterbox
 
 Build your letterbox to handle the case you analyzed in the last step:
 
@@ -479,7 +482,7 @@ However, this is split by both the top and bottom letterboxes, so you divide the
 
 Now that you know the height of the rectangle, you need to know where to place it. Thankfully, the vertical height is bound from -1 to 1, and since you're mirroring the letterboxes along both the top and bottom, so you can subtract `rect_height` from the maximum viewport height (1).
 
-#### Step 8.3: Build The Other Letterboxes
+### Step 8.4: Build The Other Letterboxes
 
 Using  math similar to that explained in the last step, write the `_build_letterbox()` logic for the other three cases:
 
