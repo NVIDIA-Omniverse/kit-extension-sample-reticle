@@ -264,7 +264,7 @@ def _build_quad(self):
         scene.Line([-1, 0, 0], [1, 0, 0], color=line_color)
 ```
 
-To divide the viewport into quadrants, you only need two lines, so why are there four lines in this code? Imagine the aspect ratio can grow and shrink in the horizontal direction, but the vertical height is static. That would preserve the vertical aspect ratio as with [scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL). In this case, a vertical position in the viewport is bound between `-1` and `1`, but the horizontal position bounds are determined by the aspect ratio.
+To divide the viewport into quadrants, you only need two lines, so why are there four lines in this code? Imagine the aspect ratio can grow and shrink in the horizontal direction, but the vertical height is static. That would preserve the vertical aspect ratio as with [scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL](https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.ui.scene/docs/index.html#omni.ui_scene.scene.AspectRatioPolicy.PRESERVE_ASPECT_VERTICAL). In this case, a vertical position in the viewport is bound between -1 and 1, but the horizontal position bounds are determined by the aspect ratio.
 
 Conversely, if your horizontal width bounds are static and the vertical height bounds can change, you would need the inverse of the aspect ratio (`inverse_ratio`).
 
