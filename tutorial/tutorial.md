@@ -20,7 +20,7 @@ Before you begin, install [Omniverse Code](https://docs.omniverse.nvidia.com/app
 
 We recommend that you understand the concepts in the following tutorial before proceeding:
 
-* [How to make an extension by spawning primitives](https://github.com/NVIDIA-Omniverse/sample-kit-extension-spawnPrims/blob/main/exts/omni.example.spawnPrims/tutorial/Spawn_PrimsTutorial.md)
+* [How to make an extension by spawning primitives](https://github.com/NVIDIA-Omniverse/kit-extension-sample-spawn-prims/blob/main/exts/omni.example.spawn_prims/tutorial/tutorial.md)
 
 ## Step 1: Familiarize Yourself with the Starter Project
 
@@ -28,10 +28,10 @@ In this section, you download and familiarize yourself with the starter project 
 
 ### Step 1.1: Clone the Repository
 
-Clone the `tutorial-start` branch of the `sample-kit-extension-reticle` [github repository](https://github.com/NVIDIA-Omniverse/sample-kit-extension-reticle/tree/tutorial-start):
+Clone the `tutorial-start` branch of the `kit-extension-sample-reticle` [github repository](https://github.com/NVIDIA-Omniverse/kit-extension-sample-reticle/tree/tutorial-start):
 
 ```shell
-git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/sample-kit-extension-reticle.git
+git clone -b tutorial-start https://github.com/NVIDIA-Omniverse/kit-extension-sample-reticle.git
 ```
 
 This repository contains the assets you use in this tutorial
@@ -42,7 +42,7 @@ From the root directory of the project, navigate to `exts/omni.example.reticle/o
 
 ### Step 1.3: Familiarize Yourself with `build_viewport_overlay()`
 
-In `views.py`, navigate to `build_vieport_overlay()`:
+In `views.py`, navigate to `build_viewport_overlay()`:
 
 ```python
 def build_viewport_overlay(self, *args):
