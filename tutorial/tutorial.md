@@ -38,11 +38,7 @@ This repository contains the assets you use in this tutorial
 
 ### Step 1.2: Navigate to `views.py`
 
-From the root directory of the project, navigate to `views.py`:
-
-```shell
-cd exts/omni.example.reticle/omni/example/reticle/views.py
-```
+From the root directory of the project, navigate to `exts/omni.example.reticle/omni/example/reticle/views.py`.
 
 ### Step 1.3: Familiarize Yourself with `build_viewport_overlay()`
 
