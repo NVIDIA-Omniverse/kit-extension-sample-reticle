@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.0] - 2022-09-09
+### Changed
+- Fixed bad use of viewport window frame for VP2
+- Now using ViewportAPI.subscribe_to_view_change() to update reticle on resolution changes.
+
 ## [1.2.0] - 2022-06-24
 ### Changed
 - Refactored to omni.example.reticle
