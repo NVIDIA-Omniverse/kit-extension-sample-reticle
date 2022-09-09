@@ -19,7 +19,7 @@ class ExampleViewportReticleExtension(omni.ext.IExt):
         viewport_window = get_active_viewport_window()
         if viewport_window is not None:
             reticle_model = ReticleModel()
-            self.reticle = ReticleOverlay(reticle_model, viewport_window)
+            self.reticle = ReticleOverlay(reticle_model, viewport_window, ext_id)
             self.reticle.build_viewport_overlay()
 
     def on_shutdown(self):
