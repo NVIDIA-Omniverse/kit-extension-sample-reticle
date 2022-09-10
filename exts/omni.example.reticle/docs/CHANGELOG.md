@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.3.1] - 2022-09-09
+### Changed
+- Fixed on_window_changed callback for VP2
+
 ## [1.3.0] - 2022-09-09
 ### Changed
 - Fixed bad use of viewport window frame for VP2

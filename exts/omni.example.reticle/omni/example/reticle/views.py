@@ -54,7 +54,7 @@ class ReticleOverlay:
         self.destroy()
 
     def destroy(self):
-        self.view_change_sub = None
+        self._view_change_sub = None
         self.scene_view.scene.clear()
         self.scene_view = None
         self.reticle_menu.destroy()
@@ -63,15 +63,20 @@ class ReticleOverlay:
 
     def on_window_changed(self, *args):
         """Update aspect ratio and rebuild overlay when viewport window changes."""
+        if self.vp_win is None:
+            return
+        
         settings = carb.settings.get_settings()
-        fill = settings.get(constants.SETTING_RESOLUTION_FILL)
+        if type(self.vp_win).__name__ == "LegacyViewportWindow":
+            fill = settings.get(constants.SETTING_RESOLUTION_FILL)
+        else:
+            fill = self.vp_win.viewport_api.fill_frame
+        
         if fill:
             width = self.vp_win.frame.computed_width + 8
             height = self.vp_win.height
         else:
-            res = self.vp_win.viewport_api.resolution
-            width = res[0]
-            height = res[1]
+            width, height = self.vp_win.viewport_api.resolution
         self._aspect_ratio = width / height
         self.build_viewport_overlay()
 
